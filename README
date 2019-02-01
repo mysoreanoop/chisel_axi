@@ -1,0 +1,3 @@
+This folder contains the AXI Full Master and Slave Chisel codes written referring to the Xilinx's template AXI protocol Verilog codes that were torn out of IPs created in Vivado's IP packager. 
+I do not own the rights for those Verilog codes (obviously) and anything else. You are free to use these codes as you please. For any queries, contact me at mnanoop2014 at big G.
+
