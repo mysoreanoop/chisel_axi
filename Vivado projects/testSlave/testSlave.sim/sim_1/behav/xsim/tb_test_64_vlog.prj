@@ -1,0 +1,12 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../../../final_test/ip_repo/test_64_1.0/hdl/test_64_v1_0_S64_AXI.v" \
+"../../../../testSlave.srcs/sources_1/new/tb_slave.v" \
+"../../../../testSlave.srcs/sources_1/new/tb_test_64.v" \
+"../../../../../../../chisel_AXI/axi-in-chisel/rtl/testSlave.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

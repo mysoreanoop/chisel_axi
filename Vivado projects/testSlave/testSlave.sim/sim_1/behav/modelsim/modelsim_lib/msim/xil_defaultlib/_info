@@ -1,0 +1,127 @@
+m255
+K4
+z2
+!s11f vlog 2019.1 2019.01, Jan  1 2019
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/jupiter/work/redefine_test/chisel_test/testSlave/testSlave.sim/sim_1/behav/modelsim
+vglbl
+!s110 1548670929
+!i10b 1
+!s100 DCW3=ePZ4oEojGg2KL;HS0
+!s11b :OElb9;ejghaOl1Q4Ld<o3
+ITNN_cbZIG@:>zYe@^CH>f0
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1513215259
+8glbl.v
+Fglbl.v
+L0 6
+OE;L;2019.1;69
+r1
+!s85 0
+31
+!s108 1548670929.000000
+!s107 glbl.v|
+!s90 -work|xil_defaultlib|glbl.v|
+!i113 0
+Z2 o-work xil_defaultlib -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z3 tCvgOpt 0
+vtb_slave
+!s10a 1548337113
+Z4 !s110 1548670918
+!i10b 1
+!s100 dIMSl^^R`LFXP_LYCDWkJ1
+!s11b mAHz9>16NObgiQL@XL6P>1
+Id8O06@n_@fRHa^IJ_];2D0
+R1
+R0
+w1548337113
+8../../../../testSlave.srcs/sources_1/new/tb_slave.v
+F../../../../testSlave.srcs/sources_1/new/tb_slave.v
+L0 4
+Z5 OL;L;2019.1;69
+r1
+!s85 0
+31
+Z6 !s108 1548670917.000000
+Z7 !s107 ../../../../../../../chisel_AXI/axi-in-chisel/rtl/testSlave.v|../../../../testSlave.srcs/sources_1/new/tb_test_64.v|../../../../testSlave.srcs/sources_1/new/tb_slave.v|../../../../../../final_test/ip_repo/test_64_1.0/hdl/test_64_v1_0_S64_AXI.v|
+Z8 !s90 -incr|-work|xil_defaultlib|../../../../../../final_test/ip_repo/test_64_1.0/hdl/test_64_v1_0_S64_AXI.v|../../../../testSlave.srcs/sources_1/new/tb_slave.v|../../../../testSlave.srcs/sources_1/new/tb_test_64.v|../../../../../../../chisel_AXI/axi-in-chisel/rtl/testSlave.v|
+!i113 0
+R2
+R3
+vtb_test_64
+!s10a 1548667791
+R4
+!i10b 1
+!s100 5?FZlb@Fd=a4mdEPaWTO72
+!s11b <H68=9?_R12IM3NkeS7P91
+I_c>7IZ6;GBB1^[G`;L7DY2
+R1
+R0
+w1548667791
+8../../../../testSlave.srcs/sources_1/new/tb_test_64.v
+F../../../../testSlave.srcs/sources_1/new/tb_test_64.v
+L0 4
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R2
+R3
+vtest_64_v1_0_S64_AXI
+!s10a 1548392328
+R4
+!i10b 1
+!s100 NTUDmMO;^7d;hC@^lU`;K1
+!s11b ^_RDONZf6c4RkfF@jdGHK0
+I9WLRz]DTk:Y=mC48kcM4X0
+R1
+R0
+w1548392328
+8../../../../../../final_test/ip_repo/test_64_1.0/hdl/test_64_v1_0_S64_AXI.v
+F../../../../../../final_test/ip_repo/test_64_1.0/hdl/test_64_v1_0_S64_AXI.v
+L0 4
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R2
+R3
+ntest_64_v1_0_@s64_@a@x@i
+vtestSlave
+!s10a 1548661883
+R4
+!i10b 1
+!s100 gbcf:[eUzm63Zk^U?YKWc1
+!s11b WGA[VPLOnYo<H;=8;VnI[2
+IbEQz@9eXgE?V`=f?hb^<d3
+R1
+R0
+w1548661883
+8../../../../../../../chisel_AXI/axi-in-chisel/rtl/testSlave.v
+F../../../../../../../chisel_AXI/axi-in-chisel/rtl/testSlave.v
+L0 1
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R2
+R3
+ntest@slave

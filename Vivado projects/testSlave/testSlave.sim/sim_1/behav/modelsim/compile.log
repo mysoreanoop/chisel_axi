@@ -1,0 +1,55 @@
+QuestaSim vmap 2019.1 Lib Mapping Utility 2019.01 Jan  1 2019
+vmap xil_defaultlib modelsim_lib/msim/xil_defaultlib 
+Copying /opt/eda/questa/questasim/linux/../modelsim.ini to modelsim.ini
+Modifying modelsim.ini
+QuestaSim-64 vlog 2019.1 Compiler 2019.01 Jan  1 2019
+Start time: 15:51:57 on Jan 28,2019
+vlog -incr -work xil_defaultlib ../../../../../../final_test/ip_repo/test_64_1.0/hdl/test_64_v1_0_S64_AXI.v ../../../../testSlave.srcs/sources_1/new/tb_slave.v ../../../../testSlave.srcs/sources_1/new/tb_test_64.v ../../../../../../../chisel_AXI/axi-in-chisel/rtl/testSlave.v 
+-- Compiling module test_64_v1_0_S64_AXI
+** Warning: ../../../../../../final_test/ip_repo/test_64_1.0/hdl/test_64_v1_0_S64_AXI.v(598): (vlog-2256) Event expressions should result in a singular type.
+-- Compiling module tb_slave
+-- Compiling module tb_test_64
+-- Compiling module testSlave
+
+Top level modules:
+	tb_slave
+	tb_test_64
+End time: 15:51:58 on Jan 28,2019, Elapsed time: 0:00:01
+Errors: 0, Warnings: 1
+QuestaSim vlog 2019.1 Compiler 2019.01 Jan  1 2019
+Start time: 15:51:58 on Jan 28,2019
+vlog -work xil_defaultlib glbl.v 
+-- Compiling module glbl
+
+Top level modules:
+	glbl
+End time: 15:51:58 on Jan 28,2019, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+** Warning: (vlib-34) Library already exists at "modelsim_lib/work".
+** Warning: (vlib-34) Library already exists at "modelsim_lib/msim".
+** Warning: (vlib-34) Library already exists at "modelsim_lib/msim/xil_defaultlib".
+QuestaSim vmap 2019.1 Lib Mapping Utility 2019.01 Jan  1 2019
+vmap xil_defaultlib modelsim_lib/msim/xil_defaultlib 
+Modifying modelsim.ini
+QuestaSim-64 vlog 2019.1 Compiler 2019.01 Jan  1 2019
+Start time: 15:52:09 on Jan 28,2019
+vlog -incr -work xil_defaultlib ../../../../../../final_test/ip_repo/test_64_1.0/hdl/test_64_v1_0_S64_AXI.v ../../../../testSlave.srcs/sources_1/new/tb_slave.v ../../../../testSlave.srcs/sources_1/new/tb_test_64.v ../../../../../../../chisel_AXI/axi-in-chisel/rtl/testSlave.v 
+-- Skipping module test_64_v1_0_S64_AXI
+-- Skipping module tb_slave
+-- Skipping module tb_test_64
+-- Skipping module testSlave
+
+Top level modules:
+	tb_slave
+	tb_test_64
+End time: 15:52:09 on Jan 28,2019, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim vlog 2019.1 Compiler 2019.01 Jan  1 2019
+Start time: 15:52:09 on Jan 28,2019
+vlog -work xil_defaultlib glbl.v 
+-- Compiling module glbl
+
+Top level modules:
+	glbl
+End time: 15:52:09 on Jan 28,2019, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0

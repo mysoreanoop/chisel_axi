@@ -1,0 +1,197 @@
+$timescale 1ps $end
+$scope module testSlave $end
+$var wire 1 ! clk $end
+$var wire 1 " reset $end
+$var wire 1 # S_AXI_RVALID $end
+$var wire 1 $ S_AXI_WVALID $end
+$var wire 1 % mem_wren $end
+$var wire 1 & S_AXI_ARVALID $end
+$var wire 1 ' S_AXI_RREADY $end
+$var wire 1 ( S_AXI_AWVALID $end
+$var wire 1 ) mem_rden $end
+$var wire 1 * axi_rlast $end
+$var wire 1 + S_AXI_RLAST $end
+$var wire 1 , S_AXI_ARREADY $end
+$var wire 1 - S_AXI_WREADY $end
+$var wire 1 . S_AXI_AWREADY $end
+$var wire 1 / S_AXI_BVALID $end
+$var wire 1 0 S_AXI_WLAST $end
+$var wire 1 1 axi_awready $end
+$var wire 1 2 axi_rvalid $end
+$var wire 1 3 axi_arready $end
+$var wire 1 4 axi_arv_arr_flag $end
+$var wire 1 5 axi_awv_awr_flag $end
+$var wire 1 6 axi_wready $end
+$var wire 1 7 S_AXI_BREADY $end
+$var wire 1 8 axi_bvalid $end
+$var wire 2 9 S_AXI_ARBURST $end
+$var wire 2 : axi_arburst $end
+$var wire 2 ; S_AXI_AWBURST $end
+$var wire 2 < axi_awburst $end
+$var wire 2 = axi_rresp $end
+$var wire 2 > S_AXI_RRESP $end
+$var wire 2 ? axi_bresp $end
+$var wire 2 @ S_AXI_BRESP $end
+$var wire 3 A S_AXI_AWSIZE $end
+$var wire 3 B S_AXI_ARSIZE $end
+$var wire 4 C mem_address $end
+$var wire 4 D S_AXI_WSTRB $end
+$var wire 6 E S_AXI_ARID $end
+$var wire 6 F S_AXI_RID $end
+$var wire 6 G S_AXI_ARADDR $end
+$var wire 6 H axi_araddr $end
+$var wire 6 I S_AXI_AWADDR $end
+$var wire 6 J axi_awaddr $end
+$var wire 6 K S_AXI_AWID $end
+$var wire 6 L S_AXI_BID $end
+$var wire 8 M axi_awlen_cntr $end
+$var wire 8 N S_AXI_AWLEN $end
+$var wire 8 O axi_awlen $end
+$var wire 8 P axi_arlen_cntr $end
+$var wire 8 Q S_AXI_ARLEN $end
+$var wire 8 R axi_arlen $end
+$var wire 32 S S_AXI_WDATA $end
+$var wire 32 T data_in $end
+$var wire 32 U bram_15 $end
+$var wire 32 V bram_14 $end
+$var wire 32 W bram_13 $end
+$var wire 32 X bram_12 $end
+$var wire 32 Y bram_11 $end
+$var wire 32 Z bram_10 $end
+$var wire 32 [ bram_9 $end
+$var wire 32 \ bram_8 $end
+$var wire 32 ] bram_7 $end
+$var wire 32 ^ bram_6 $end
+$var wire 32 _ bram_5 $end
+$var wire 32 ` bram_4 $end
+$var wire 32 a bram_3 $end
+$var wire 32 b bram_2 $end
+$var wire 32 c bram_1 $end
+$var wire 32 d bram_0 $end
+$var wire 32 e data_out $end
+$var wire 32 f axi_rdata $end
+$var wire 32 g S_AXI_RDATA $end
+$upscope $end
+$enddefinitions $end
+$dumpvars
+$end
+#0
+b1 !
+b1 "
+b0 #
+b1 $
+b0 %
+b0 &
+b0 '
+b0 (
+b0 )
+b0 *
+b0 +
+b0 ,
+b0 -
+b0 .
+b0 /
+b0 0
+b0 1
+b0 2
+b0 3
+b0 4
+b0 5
+b0 6
+b0 7
+b0 8
+b01 9
+b00 :
+b00 ;
+b00 <
+b00 =
+b00 >
+b00 ?
+b00 @
+b000 A
+b000 B
+b0000 C
+b1000 D
+b011010 E
+b011010 F
+b110000 G
+b000000 H
+b110000 I
+b000000 J
+b110000 K
+b110000 L
+b00000000 M
+b11011010 N
+b00000000 O
+b00000000 P
+b11111000 Q
+b00000000 R
+b11000101010011000101111111100001 S
+b11000101010011000101111111100001 T
+b00000000000000000000000000000000 U
+b00000000000000000000000000000000 V
+b00000000000000000000000000000000 W
+b00000000000000000000000000000000 X
+b00000000000000000000000000000000 Y
+b00000000000000000000000000000000 Z
+b00000000000000000000000000000000 [
+b00000000000000000000000000000000 \
+b00000000000000000000000000000000 ]
+b00000000000000000000000000000000 ^
+b00000000000000000000000000000000 _
+b00000000000000000000000000000000 `
+b00000000000000000000000000000000 a
+b00000000000000000000000000000000 b
+b00000000000000000000000000000000 c
+b00000000000000000000000000000000 d
+b00000000000000000000000000000000 e
+b00000000000000000000000000000000 f
+b00000000000000000000000000000000 g
+#1
+b0 !
+#2
+b1 !
+b1 "
+#3
+b0 !
+#4
+b1 !
+#5
+b0 !
+#6
+b1 !
+#7
+b0 !
+#8
+b1 !
+#9
+b0 !
+#10
+b1 !
+b0 "
+b0 $
+b0 &
+b0 '
+b0 (
+b0 0
+b0 7
+b00 9
+b00 ;
+b000 A
+b0000 D
+b000000 E
+b000000 F
+b000000 G
+b000000 I
+b000000 K
+b000000 L
+b00000000 N
+b00000000 Q
+b00000000000000000000000000000000 S
+b00000000000000000000000000000000 T
+#11
+b0 !
+#12
+b1 !
+#13
+b0 !

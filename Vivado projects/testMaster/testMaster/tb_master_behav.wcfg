@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_master_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_master" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="8378333333fs"></ZoomStartTime>
+      <ZoomEndTime time="9994333334fs"></ZoomEndTime>
+      <Cursor1Time time="10760000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="203"></NameColumnWidth>
+      <ValueColumnWidth column_width="128"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="65" />
+   <wvobject type="logic" fp_name="/tb_master/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/instSlave/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/reset">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/instSlave/reset">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/io_INIT_AXI_TXN">
+      <obj_property name="ElementShortName">io_INIT_AXI_TXN</obj_property>
+      <obj_property name="ObjectShortName">io_INIT_AXI_TXN</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/init_txn_pulse">
+      <obj_property name="ElementShortName">init_txn_pulse</obj_property>
+      <obj_property name="ObjectShortName">init_txn_pulse</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/start_single_burst_write">
+      <obj_property name="ElementShortName">start_single_burst_write</obj_property>
+      <obj_property name="ObjectShortName">start_single_burst_write</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/burst_write_active">
+      <obj_property name="ElementShortName">burst_write_active</obj_property>
+      <obj_property name="ObjectShortName">burst_write_active</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/wnext">
+      <obj_property name="ElementShortName">wnext</obj_property>
+      <obj_property name="ObjectShortName">wnext</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/mst_exec_state">
+      <obj_property name="ElementShortName">mst_exec_state[1:0]</obj_property>
+      <obj_property name="ObjectShortName">mst_exec_state[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/write_index">
+      <obj_property name="ElementShortName">write_index[4:0]</obj_property>
+      <obj_property name="ObjectShortName">write_index[4:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/io_TXN_DONE">
+      <obj_property name="ElementShortName">io_TXN_DONE</obj_property>
+      <obj_property name="ObjectShortName">io_TXN_DONE</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/count">
+      <obj_property name="ElementShortName">count[31:0]</obj_property>
+      <obj_property name="ObjectShortName">count[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/instSlave/T19">
+      <obj_property name="ElementShortName">T19</obj_property>
+      <obj_property name="ObjectShortName">T19</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/instSlave/axi_awready">
+      <obj_property name="ElementShortName">axi_awready</obj_property>
+      <obj_property name="ObjectShortName">axi_awready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/instSlave/S_AXI_AWREADY">
+      <obj_property name="ElementShortName">S_AXI_AWREADY</obj_property>
+      <obj_property name="ObjectShortName">S_AXI_AWREADY</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_WREADY">
+      <obj_property name="ElementShortName">M_AXI_WREADY</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_WREADY</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_WVALID">
+      <obj_property name="ElementShortName">M_AXI_WVALID</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_WVALID</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_WDATA">
+      <obj_property name="ElementShortName">M_AXI_WDATA[31:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_WDATA[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_WSTRB">
+      <obj_property name="ElementShortName">M_AXI_WSTRB[3:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_WSTRB[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_WLAST">
+      <obj_property name="ElementShortName">M_AXI_WLAST</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_WLAST</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_AWREADY">
+      <obj_property name="ElementShortName">M_AXI_AWREADY</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_AWREADY</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_AWVALID">
+      <obj_property name="ElementShortName">M_AXI_AWVALID</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_AWVALID</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_AWID">
+      <obj_property name="ElementShortName">M_AXI_AWID[5:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_AWID[5:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_AWADDR">
+      <obj_property name="ElementShortName">M_AXI_AWADDR[5:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_AWADDR[5:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_AWLEN">
+      <obj_property name="ElementShortName">M_AXI_AWLEN[7:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_AWLEN[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_AWSIZE">
+      <obj_property name="ElementShortName">M_AXI_AWSIZE[2:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_AWSIZE[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_AWBURST">
+      <obj_property name="ElementShortName">M_AXI_AWBURST[1:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_AWBURST[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_BREADY">
+      <obj_property name="ElementShortName">M_AXI_BREADY</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_BREADY</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_BVALID">
+      <obj_property name="ElementShortName">M_AXI_BVALID</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_BVALID</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/write_burst_counter">
+      <obj_property name="ElementShortName">write_burst_counter[1:0]</obj_property>
+      <obj_property name="ObjectShortName">write_burst_counter[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_BID">
+      <obj_property name="ElementShortName">M_AXI_BID[5:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_BID[5:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_BRESP">
+      <obj_property name="ElementShortName">M_AXI_BRESP[1:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_BRESP[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/writes_done">
+      <obj_property name="ElementShortName">writes_done</obj_property>
+      <obj_property name="ObjectShortName">writes_done</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/instSlave/mem_wren">
+      <obj_property name="ElementShortName">mem_wren</obj_property>
+      <obj_property name="ObjectShortName">mem_wren</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_0">
+      <obj_property name="ElementShortName">bram_0[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_0[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_1">
+      <obj_property name="ElementShortName">bram_1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_1[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_2">
+      <obj_property name="ElementShortName">bram_2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_2[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_3">
+      <obj_property name="ElementShortName">bram_3[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_3[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_4">
+      <obj_property name="ElementShortName">bram_4[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_4[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_5">
+      <obj_property name="ElementShortName">bram_5[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_5[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_6">
+      <obj_property name="ElementShortName">bram_6[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_6[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_7">
+      <obj_property name="ElementShortName">bram_7[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_7[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_8">
+      <obj_property name="ElementShortName">bram_8[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_8[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_9">
+      <obj_property name="ElementShortName">bram_9[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_9[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_10">
+      <obj_property name="ElementShortName">bram_10[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_10[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_11">
+      <obj_property name="ElementShortName">bram_11[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_11[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_12">
+      <obj_property name="ElementShortName">bram_12[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_12[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_13">
+      <obj_property name="ElementShortName">bram_13[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_13[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_14">
+      <obj_property name="ElementShortName">bram_14[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_14[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/instSlave/bram_15">
+      <obj_property name="ElementShortName">bram_15[31:0]</obj_property>
+      <obj_property name="ObjectShortName">bram_15[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_RREADY">
+      <obj_property name="ElementShortName">M_AXI_RREADY</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_RREADY</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_RVALID">
+      <obj_property name="ElementShortName">M_AXI_RVALID</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_RVALID</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_RID">
+      <obj_property name="ElementShortName">M_AXI_RID[5:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_RID[5:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_RDATA">
+      <obj_property name="ElementShortName">M_AXI_RDATA[31:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_RDATA[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_RRESP">
+      <obj_property name="ElementShortName">M_AXI_RRESP[1:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_RRESP[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_RLAST">
+      <obj_property name="ElementShortName">M_AXI_RLAST</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_RLAST</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_ARREADY">
+      <obj_property name="ElementShortName">M_AXI_ARREADY</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_ARREADY</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/M_AXI_ARVALID">
+      <obj_property name="ElementShortName">M_AXI_ARVALID</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_ARVALID</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_ARID">
+      <obj_property name="ElementShortName">M_AXI_ARID[5:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_ARID[5:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_ARADDR">
+      <obj_property name="ElementShortName">M_AXI_ARADDR[5:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_ARADDR[5:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_ARLEN">
+      <obj_property name="ElementShortName">M_AXI_ARLEN[7:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_ARLEN[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_ARSIZE">
+      <obj_property name="ElementShortName">M_AXI_ARSIZE[2:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_ARSIZE[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_master/instMaster/M_AXI_ARBURST">
+      <obj_property name="ElementShortName">M_AXI_ARBURST[1:0]</obj_property>
+      <obj_property name="ObjectShortName">M_AXI_ARBURST[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_master/instMaster/reads_done">
+      <obj_property name="ElementShortName">reads_done</obj_property>
+      <obj_property name="ObjectShortName">reads_done</obj_property>
+   </wvobject>
+</wave_config>
