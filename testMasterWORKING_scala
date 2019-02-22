@@ -1,0 +1,385 @@
+package AXIChisel
+
+import Chisel._
+
+class axiMaster(idWidth: Int, addrWidth: Int, dataWidth: Int) extends Bundle {
+	val r = Decoupled(new Tr(idWidth, dataWidth)).flip
+	val ar = Decoupled(new Tar(idWidth, addrWidth))
+	val w = Decoupled(new Tw(idWidth, dataWidth))
+	val aw = Decoupled(new Taw(idWidth, addrWidth))
+	val b = Decoupled(new Tb(idWidth)).flip
+	val start_single_burst_write = Bool(INPUT)
+	val start_single_burst_read = Bool(INPUT)
+
+	//val INIT_AXI_TXN = Bool(INPUT)
+	//val TXN_DONE = Bool(OUTPUT)
+	//val ERROR = Bool(OUTPUT)
+	
+	def renameSignals() {
+		r.bits.id.setName("M_AXI_RID")
+		r.bits.data.setName("M_AXI_RDATA")
+		r.bits.resp.setName("M_AXI_RRESP")
+		r.bits.last.setName("M_AXI_RLAST")
+		r.valid.setName("M_AXI_RVALID")
+		r.ready.setName("M_AXI_RREADY")
+
+		ar.bits.id.setName("M_AXI_ARID")
+		ar.bits.addr.setName("M_AXI_ARADDR")
+		ar.bits.len.setName("M_AXI_ARLEN")
+		ar.bits.size.setName("M_AXI_ARSIZE")
+		ar.bits.burst.setName("M_AXI_ARBURST")
+		ar.valid.setName("M_AXI_ARVALID")
+		ar.ready.setName("M_AXI_ARREADY")
+
+		aw.bits.id.setName("M_AXI_AWID")
+		aw.bits.addr.setName("M_AXI_AWADDR")
+		aw.bits.len.setName("M_AXI_AWLEN")
+		aw.bits.size.setName("M_AXI_AWSIZE")
+		aw.bits.burst.setName("M_AXI_AWBURST")
+		aw.valid.setName("M_AXI_AWVALID")
+		aw.ready.setName("M_AXI_AWREADY")
+
+		w.bits.data.setName("M_AXI_WDATA")
+		w.bits.strb.setName("M_AXI_WSTRB")
+		w.bits.last.setName("M_AXI_WLAST")
+		w.valid.setName("M_AXI_WVALID")
+		w.ready.setName("M_AXI_WREADY")
+
+		b.bits.id.setName("M_AXI_BID")
+		b.bits.resp.setName("M_AXI_BRESP")
+		b.valid.setName("M_AXI_BVALID")
+		b.ready.setName("M_AXI_BREADY")
+	}
+
+	override def clone = { new axiMaster(idWidth, addrWidth, dataWidth).asInstanceOf[this.type] }
+
+}
+
+class testMaster(idWidth: Int, addrWidth: Int, dataWidth: Int) extends Module {
+
+	val io = new axiMaster(idWidth, addrWidth, dataWidth)
+	io.renameSignals()
+	
+	val C_M_AXI_BURST_LEN = 16 //no. of rw operations in one command monitored by write_index
+	val C_M_TARGET_SLAVE_BASE_ADDR = 0x40000000
+	val C_TRANSACTIONS_NUM = log2Up(C_M_AXI_BURST_LEN - 1) //for write index width
+	val C_MASTER_LENGTH = 7//12 
+						//total such commands, 6 will be subtracted from this
+						//monitored by write_burst_cocunter
+	val C_NO_BURSTS_REQ = C_MASTER_LENGTH - log2Up((C_M_AXI_BURST_LEN * dataWidth/8) - 1)
+
+//	val STATE = Enum(UInt(), 'IDLE :: 'INIT_WRITE :: 'INIT_READ :: 'INIT_COMPARE :: Nil)
+//	val mst_exec_state = Reg(UInt(width = 2))
+
+	val axi_awaddr = Reg(UInt( width = addrWidth))
+      val axi_awvalid = Reg(Bool())
+	val axi_wdata = Reg(UInt( width = dataWidth))
+      val axi_wvalid = Reg(Bool())
+      val axi_wlast = Reg(Bool())
+      val axi_bready = Reg(Bool())
+      val axi_araddr = Reg(UInt( width = addrWidth))
+      val axi_arvalid = Reg(Bool())
+      val axi_rready = Reg(Bool())
+
+
+	val write_index = Reg(UInt(width = C_TRANSACTIONS_NUM + 1))
+	val read_index = Reg(UInt(width = C_TRANSACTIONS_NUM + 1))
+	val burst_size_bytes = UInt(width = C_TRANSACTIONS_NUM + 3)
+	val write_burst_counter = Reg(UInt(width = C_NO_BURSTS_REQ + 1))
+	val read_burst_counter = Reg(UInt(width = C_NO_BURSTS_REQ + 1))
+	
+
+
+//  	val start_single_burst_write = Reg(Bool())
+//	val start_single_burst_read = Reg(Bool())
+      val writes_done = Reg(Bool())
+      val reads_done = Reg(Bool())
+	val error_reg = Reg(Bool())
+//    val compare_done = Reg(Bool())
+//    val read_mismatch = Reg(Bool())
+	val burst_write_active = Reg(Bool())
+	val burst_read_active = Reg(Bool())
+//	val expected_rdata = Reg(UInt(width = dataWidth))
+	val write_resp_error = Bool()
+	val read_resp_error = Bool()
+	val wnext = Bool()
+	val rnext = Bool()
+//      val init_txn_ff = Reg(Bool())
+//      val init_txn_ff2 = Reg(Bool())
+//      val init_txn_edge = Reg(Bool())
+//      val init_txn_pulse = Bool()
+
+
+	io.aw.bits.id := UInt(0)
+	io.aw.bits.addr := UInt(C_M_TARGET_SLAVE_BASE_ADDR) + axi_awaddr
+	io.aw.bits.len := UInt(C_M_AXI_BURST_LEN - 1)
+	io.aw.bits.size := UInt(log2Up(dataWidth/8 - 1))
+	io.aw.bits.burst := UInt(1)
+	io.aw.valid := axi_awvalid
+
+
+	io.w.bits.data := axi_wdata
+	io.w.bits.strb := UInt(0xF,4)
+	io.w.bits.last := axi_wlast
+	io.w.valid := axi_wvalid
+	io.b.ready := axi_bready
+
+
+	io.ar.bits.id := UInt(0)
+	io.ar.bits.addr := axi_araddr + UInt(C_M_TARGET_SLAVE_BASE_ADDR)
+	io.ar.bits.len := UInt(C_M_AXI_BURST_LEN - 1)
+	io.ar.bits.size := UInt(log2Up(dataWidth/8 - 1))
+	io.ar.bits.burst := UInt(1)
+	io.ar.valid := axi_arvalid
+	io.r.ready := axi_rready
+
+//	io.TXN_DONE := compare_done
+	burst_size_bytes	:= UInt(C_M_AXI_BURST_LEN * dataWidth/8)
+//	init_txn_pulse := (!init_txn_ff2) && init_txn_ff
+
+//	when(!reset) {
+//		init_txn_ff := Bool(false)
+//		init_txn_ff2 := Bool(false)
+//	} .otherwise {
+//		init_txn_ff := io.INIT_AXI_TXN
+//		init_txn_ff2 := init_txn_ff
+//	}
+
+	//write address channel
+	//write address valid 
+	when(!reset) {
+		axi_awvalid := Bool(false)
+	} .elsewhen(!axi_awvalid && io.start_single_burst_write) {
+		axi_awvalid := Bool(true)
+	} .elsewhen(io.aw.ready && axi_awvalid) {
+		axi_awvalid := Bool(false)
+	} .otherwise {
+		axi_awvalid :=axi_awvalid
+	}
+	//write address
+	when(!reset) {
+		axi_awaddr := UInt(0)
+	} .elsewhen(io.aw.ready && axi_awvalid) {
+		axi_awaddr := axi_awaddr + burst_size_bytes;
+	} .otherwise {
+		axi_awaddr := axi_awaddr
+	}
+
+	//write data channel
+	wnext := io.w.ready && axi_wvalid
+	//write valid
+	when(!reset) {
+		axi_wvalid := Bool(false)
+	} .elsewhen(!axi_wvalid && io.start_single_burst_write) {
+		axi_wvalid := Bool(true)
+	} .elsewhen(wnext && axi_wlast) {
+		axi_wvalid := Bool(false)
+	} .otherwise {
+		axi_wvalid := axi_wvalid
+	}
+	//wlast 
+	when(!reset) {
+		axi_wlast := Bool(false)
+	} . elsewhen((((write_index === (UInt(C_M_AXI_BURST_LEN) - UInt(2))) && (UInt(C_M_AXI_BURST_LEN) >=UInt(2))) && wnext) || (UInt(C_M_AXI_BURST_LEN) === UInt(1) )) {
+		axi_wlast := Bool(true)
+	} .elsewhen(wnext) {
+		axi_wlast := Bool(false)
+	} .elsewhen(axi_wlast && UInt(C_M_AXI_BURST_LEN) === UInt(1)) {
+		axi_wlast := Bool(false)
+	} .otherwise {
+		axi_wlast := axi_wlast
+	}
+
+	//burst lenght counter
+	when(!reset || io.start_single_burst_write === Bool(true)) {
+		write_index := UInt(0)
+	} .elsewhen(wnext && (write_index != UInt(C_M_AXI_BURST_LEN - 1))) {
+		write_index := write_index + UInt(1)
+	} .otherwise {
+		write_index := write_index
+	}
+
+	//write data 
+	when(!reset) {
+		axi_wdata := UInt(1)
+	} .elsewhen(wnext) {
+		axi_wdata := axi_wdata + UInt(1)
+	} .otherwise {
+		axi_wdata := axi_wdata
+	}
+
+
+	//write response channel
+	//write response ready
+	when(!reset) {
+		axi_bready := Bool(false)
+	} .elsewhen(io.b.valid && !axi_bready) {
+		axi_bready := Bool(true)
+	} .elsewhen(axi_bready) {
+		axi_bready := Bool(false)
+	} .otherwise {
+		axi_bready := axi_bready
+	}
+	write_resp_error := axi_bready && io.b.valid && Bool(io.b.bits.resp(1))
+	
+	//read address channel
+	when(!reset) {
+		axi_arvalid := Bool(false)
+	} .elsewhen(!axi_arvalid && io.start_single_burst_read) {
+		axi_arvalid := Bool(true)
+	} .elsewhen(io.ar.ready && axi_arvalid) {
+		axi_arvalid := Bool(false)
+	} .otherwise {
+		axi_arvalid := axi_arvalid
+	}
+	
+	//read address
+	when(!reset) {
+		axi_araddr := UInt(0)
+	} .elsewhen(io.ar.ready && axi_arvalid) {
+		axi_araddr := axi_araddr + burst_size_bytes
+	} .otherwise {
+		axi_araddr := axi_araddr
+	}
+
+	//read data
+	rnext := io.r.valid && axi_rready
+	when(!reset || io.start_single_burst_read) {
+		read_index := UInt(0)
+	} .elsewhen(rnext && (read_index =/= UInt(C_M_AXI_BURST_LEN -1))) {
+		read_index := read_index + UInt(1)
+	} .otherwise {
+		read_index := read_index
+	}
+
+	//read response
+	when(!reset) {	
+		axi_rready := Bool(false)
+	} .elsewhen(io.r.valid) {
+		when(io.r.bits.last && axi_rready) {
+			axi_rready := Bool(false)
+		} .otherwise {
+			axi_rready := Bool(true)
+		}
+	}
+	
+	//error reg
+	when(!reset) {
+		error_reg := Bool(false)
+	} .elsewhen(write_resp_error|| read_resp_error) {
+		error_reg := Bool(true)
+	} .otherwise {
+		error_reg := error_reg
+	}
+	
+	//example design throttling
+	//write burst counter
+	when(!reset) {
+		write_burst_counter := UInt(0)
+	} .elsewhen(io.aw.ready && axi_awvalid) {
+		when(write_burst_counter(C_NO_BURSTS_REQ) ===UInt(0)) {
+			write_burst_counter := write_burst_counter + UInt(1)
+		}
+	} .otherwise {
+		write_burst_counter := write_burst_counter 
+	}
+	
+	//read_burst_counter
+	when(!reset) {
+		read_burst_counter := UInt(0)
+	} .elsewhen(io.ar.ready && axi_arvalid) {
+		when(read_burst_counter(C_NO_BURSTS_REQ) === UInt(0)) {
+			read_burst_counter := read_burst_counter + UInt(1)
+		}
+	} .otherwise {
+		read_burst_counter := read_burst_counter
+	}
+
+	//state machine
+//	when(!reset) {
+//		io.start_single_burst_write := Bool(false)
+//		io.start_single_burst_read := Bool(false)
+//		mst_exec_state := STATE('IDLE)
+//		compare_done := Bool(false)
+//		io.ERROR := Bool(false)
+//	} .otherwise {
+//		when(mst_exec_state === STATE('IDLE)) {
+//			when(init_txn_pulse === Bool(true)) {
+//				mst_exec_state := STATE('INIT_WRITE)
+//				io.ERROR := Bool(false)
+//				compare_done := Bool(false)
+//			} .otherwise {
+//				mst_exec_state := STATE('IDLE)
+//			}
+//		} .elsewhen(mst_exec_state === STATE('INIT_WRITE)) {
+//			when(writes_done) {
+//				mst_exec_state := STATE('INIT_READ)
+//			} .otherwise {
+//				mst_exec_state := STATE('INIT_WRITE)
+//				when(!axi_awvalid && !io.start_single_burst_write && !burst_write_active) {
+//					io.start_single_burst_write := Bool(true)
+//				} .otherwise {
+//					io.start_single_burst_write := Bool(false)
+//				}
+//			}
+//		} .elsewhen(mst_exec_state === STATE('INIT_READ)) {
+//			when(reads_done) {
+//				mst_exec_state := STATE('INIT_COMPARE)
+//			} .otherwise {
+//				mst_exec_state := STATE('INIT_READ)
+//				when(!axi_arvalid && !burst_read_active && !io.start_single_burst_read) {
+//					io.start_single_burst_read := Bool(true)
+//				} .otherwise {
+//					io.start_single_burst_read := Bool(false)
+//				}
+//			}
+//		} .elsewhen(mst_exec_state === STATE('INIT_COMPARE)) {
+//			io.ERROR := error_reg
+//			mst_exec_state := STATE('IDLE)
+//			compare_done := Bool(true)
+//		} .otherwise {
+//			mst_exec_state := STATE('IDLE)
+//		}
+//	}
+	
+	//burst write active
+	when(!reset) {
+		burst_write_active := Bool(false)
+	} .elsewhen(io.start_single_burst_write) {
+		burst_write_active := Bool(true)
+	} .elsewhen(io.b.valid && axi_bready) {
+		burst_write_active := Bool(false)
+	}
+
+	//writes_done
+	when(!reset) {
+		writes_done := Bool(false)
+	} .elsewhen(io.b.valid && (write_burst_counter(C_NO_BURSTS_REQ)) && axi_bready) {
+		writes_done := Bool(true)
+	} .otherwise {
+		writes_done := writes_done
+	}
+
+	//burst_read_active
+	when(!reset) {
+		burst_read_active := Bool(false)
+	} .elsewhen(io.start_single_burst_read) {
+		burst_read_active := Bool(true)
+	} .elsewhen(io.r.valid && axi_rready && io.r.bits.last) {
+		burst_read_active := Bool(false)
+	}
+
+	//reads_done
+	when(!reset) {
+		reads_done := Bool(false)
+	} .elsewhen(io.r.valid && axi_rready && (read_index === UInt(C_M_AXI_BURST_LEN - 1)) && (read_burst_counter(C_NO_BURSTS_REQ))) {
+		reads_done := Bool(true)
+	} .otherwise {
+		reads_done := reads_done
+	}
+
+}
+
+class testerTestMaster(c:testMaster) extends Tester(c) {
+	step(1)
+}

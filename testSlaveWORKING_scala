@@ -123,38 +123,39 @@ class testSlave(idWidth: Int, addrWidth: Int, dataWidth: Int) extends Module {
 
 //	val debug_reg = Reg(UInt(width = 16))
 
-	val axi_awaddr = Reg(init = UInt(0, width = addrWidth))
-	val axi_awready = Reg(init = Bool(false))
+	val axi_awaddr = Reg(/*init = */UInt( width = addrWidth))
+	val axi_awready = Reg(/*init = */Bool())
 
-	val axi_wready = Reg(init = Bool(false))
+	val axi_wready = Reg(/*init = */Bool())
 
-	val axi_bresp = Reg(init = UInt(0, width = 2))
-	val axi_bvalid = Reg(init = Bool(false))
+	val axi_bresp = Reg(/*init = */UInt( width = 2))
+	val axi_bvalid = Reg(/*init = */Bool())
 
-	val axi_araddr = Reg(init = UInt(0, width = addrWidth))
-	val axi_arready = Reg(init = Bool(false))
+	val axi_araddr = Reg(/*init = */UInt( width = addrWidth))
+	val axi_arready = Reg(/*init = */Bool())
 
-	val axi_rdata = Reg(init = UInt(0, width = dataWidth))
-	val axi_rresp = Reg(init = UInt(0, width = 2))
-	val axi_rlast = Reg(init = Bool(false))
-	val axi_rvalid = Reg(init = Bool(false))
+	val axi_rdata = Reg(/*init = */UInt( width = dataWidth))
+	val axi_rresp = Reg(/*init = */UInt( width = 2))
+	val axi_rlast = Reg(/*init = */Bool())
+	val axi_rvalid = Reg(/*init = */Bool())
 	
 
-	val axi_awv_awr_flag = Reg(init = Bool(false))
-	val axi_arv_arr_flag = Reg(init = Bool(false))
+	val axi_awv_awr_flag = Reg(/*init = */Bool())
+	val axi_arv_arr_flag = Reg(/*init = */Bool())
 
-	val axi_awlen_cntr = Reg(init = UInt(0, width = 8))
-	val axi_arlen_cntr = Reg(init = UInt(0, width = 8))
+	val axi_awlen_cntr = Reg(/*init = */UInt( width = 8))
+	val axi_arlen_cntr = Reg(/*init = */UInt( width = 8))
 
-	val axi_arburst = Reg(init = UInt(0, width = 2))
-	val axi_awburst = Reg(init = UInt(0, width = 2))
+	val axi_arburst = Reg(/*init = */UInt( width = 2))
+	val axi_awburst = Reg(/*init = */UInt( width = 2))
 
-	val axi_arlen = Reg(init = UInt(0, width = 8))
-	val axi_awlen = Reg(init = UInt(0, width = 8))
+	val axi_arlen = Reg(/*init = */UInt( width = 8))
+	val axi_awlen = Reg(/*init = */UInt( width = 8))
 
 
 	val ADDR_LSB = dataWidth/32 + 1
 	val OPT_MEM_ADDR_BITS = 3 	//is 5 for 256 Bytes; 3 for 64 Bytes
+	val USER_NUM_MEM = 1
 
 	val mem_address = UInt(width = OPT_MEM_ADDR_BITS + 1) 
 	val mem_data_out = Reg(UInt(width = dataWidth))
@@ -177,42 +178,62 @@ class testSlave(idWidth: Int, addrWidth: Int, dataWidth: Int) extends Module {
 	io.r.bits.id 		:= io.ar.bits.id
 
 	//AWREADY
-	when(!axi_awready && io.aw.valid && !axi_awv_awr_flag && !axi_arv_arr_flag) {
-		axi_awready := Bool(true)
-		axi_awv_awr_flag := Bool(true)
-	} .elsewhen(io.w.bits.last && axi_wready) {
+	when(!reset) {
+		axi_awready := Bool(false)
 		axi_awv_awr_flag := Bool(false)
 	} .otherwise {
-		axi_awready := Bool(false)
+		when(!axi_awready && io.aw.valid && !axi_awv_awr_flag && !axi_arv_arr_flag) {
+			axi_awready := Bool(true)
+			axi_awv_awr_flag := Bool(true)
+		} .elsewhen(io.w.bits.last && axi_wready) {
+			axi_awv_awr_flag := Bool(false)
+		} .otherwise {
+			axi_awready := Bool(false)
+		}
 	}
 
 	//AWADDR 
-	when(!axi_awready && io.aw.valid && !axi_awv_awr_flag) {
-		axi_awaddr := io.aw.bits.addr(addrWidth-1, 0)
-		axi_awburst := io.aw.bits.burst
-		axi_awlen := io.aw.bits.len
+	when(!reset) {
+		axi_awaddr := UInt(0)
 		axi_awlen_cntr := UInt(0)
-	} .elsewhen((axi_awlen_cntr <= axi_awlen) && axi_wready && io.w.valid) {
-		axi_awlen_cntr := axi_awlen_cntr + UInt(1)
-		when(axi_awburst === UInt(0)) {
-			axi_awaddr := axi_awaddr
-		} .elsewhen(axi_awburst === UInt(1)) {
-			//Wrapping burst not supported
-			axi_awaddr(addrWidth-1, ADDR_LSB) := axi_awaddr(addrWidth-1, ADDR_LSB) + UInt(1)
-			axi_awaddr(ADDR_LSB-1, 0) := UInt(0, ADDR_LSB)
-		} .otherwise {
-			axi_awaddr := axi_awaddr(addrWidth-1, ADDR_LSB) + UInt(1)
+		axi_awburst := UInt(0)
+		axi_awlen := UInt(0)
+	} .otherwise {
+		when(!axi_awready && io.aw.valid && !axi_awv_awr_flag) {
+			axi_awaddr := io.aw.bits.addr(addrWidth-1, 0)
+			axi_awburst := io.aw.bits.burst
+			axi_awlen := io.aw.bits.len
+			axi_awlen_cntr := UInt(0)
+		} .elsewhen((axi_awlen_cntr <= axi_awlen) && axi_wready && io.w.valid) {
+			axi_awlen_cntr := axi_awlen_cntr + UInt(1)
+			when(axi_awburst === UInt(0)) {
+				axi_awaddr := axi_awaddr
+			} .elsewhen(axi_awburst === UInt(1)) {
+				//Wrapping burst not supported
+				axi_awaddr(addrWidth-1, ADDR_LSB) := axi_awaddr(addrWidth-1, ADDR_LSB) + UInt(1)
+				axi_awaddr(ADDR_LSB-1, 0) := UInt(0, ADDR_LSB)
+			} .otherwise {
+				axi_awaddr := axi_awaddr(addrWidth-1, ADDR_LSB) + UInt(1)
+			}
 		}
 	}
 	
 	//WREADY
-	when(!axi_wready && io.w.valid && axi_awv_awr_flag) {
-		axi_wready := Bool(true)
-	} .elsewhen (io.w.bits.last && axi_wready) {
+	when(!reset) {
 		axi_wready := Bool(false)
+	} .otherwise {
+		when(!axi_wready && io.w.valid && axi_awv_awr_flag) {
+			axi_wready := Bool(true)
+		} .elsewhen (io.w.bits.last && axi_wready) {
+			axi_wready := Bool(false)
+		}
 	}
 
-	//BRESP
+    //BRESP
+	when(!reset) {
+		axi_bvalid := Bool(false)
+		axi_bresp := UInt(0,2)
+	} .otherwise {
     	when(axi_awv_awr_flag && axi_wready && io.w.valid && ~axi_bvalid && io.w.bits.last) {
     		axi_bvalid := Bool(true)
     		axi_bresp := UInt(0)
@@ -221,8 +242,13 @@ class testSlave(idWidth: Int, addrWidth: Int, dataWidth: Int) extends Module {
     			axi_bvalid := Bool(false)
     		}
     	}
+	}
 
-	//ARREADY
+    //ARREADY
+	when(!reset) {
+		axi_arready := Bool(false)
+		axi_arv_arr_flag := Bool(false)
+	} .otherwise {
     	when(!axi_arready && io.ar.valid && !axi_awv_awr_flag && !axi_arv_arr_flag) {
     		axi_arready := Bool(true)
     		axi_arv_arr_flag := Bool(true)
@@ -231,8 +257,16 @@ class testSlave(idWidth: Int, addrWidth: Int, dataWidth: Int) extends Module {
     	} .otherwise {
     		axi_arready := Bool(false)
     	}
+	}
 
-	//ARADDR
+    //ARADDR
+	when(!reset) {
+		axi_araddr := UInt(0)
+		axi_arlen_cntr := UInt(0)
+		axi_arburst := UInt(0)
+		axi_arlen := UInt(0)
+		axi_rlast := Bool(false)
+	} .otherwise {
     	when(!axi_arready && io.ar.valid && !axi_arv_arr_flag) {
     		axi_araddr := io.ar.bits.addr(addrWidth-1, 0)
     		axi_arburst := io.ar.bits.burst
@@ -256,14 +290,20 @@ class testSlave(idWidth: Int, addrWidth: Int, dataWidth: Int) extends Module {
     	} .elsewhen(io.r.ready) {
     		axi_rlast := Bool(false)
     	}
+	}
 
-    //RVALID
+    //ARVALID
+	when(!reset) {
+		axi_rvalid := Bool(false)
+		axi_rresp := UInt(0)
+	} .otherwise {
     		when(axi_arv_arr_flag && !axi_rvalid) {
     			axi_rvalid := Bool(true)
     			axi_rresp  := UInt(0)
     		} .elsewhen(axi_rvalid && io.r.ready) {
     			axi_rvalid := Bool(false)
     		}
+	}
 
 	//example
 	mem_address := Mux(axi_arv_arr_flag, axi_araddr(ADDR_LSB+OPT_MEM_ADDR_BITS, ADDR_LSB), Mux(axi_awv_awr_flag, axi_awaddr(ADDR_LSB+OPT_MEM_ADDR_BITS, ADDR_LSB), UInt(0)))
@@ -293,15 +333,15 @@ class testSlave(idWidth: Int, addrWidth: Int, dataWidth: Int) extends Module {
 //		}
 //	}
 	//end generate
-	val bram = Reg(init = Vec.fill(16) {UInt(0xDEAD, width = 32)})
+	val bram = Reg(Vec.fill(16) {UInt(width = 32)})
 	val data_in = UInt(width = 32)
 	val data_out = UInt(width = 32)
 
-	//for(i <- 0 until 16) {
-	//	when(!reset) {
-	//		bram(i) := UInt(0xDEADBEEF)
-	//	}
-	//}
+	for(i <- 0 until 16) {
+		when(!reset) {
+			bram(i) := UInt(1)<<i
+		}
+	}
 
 	data_in := io.w.bits.data
 	data_out := bram(mem_address)
